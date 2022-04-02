@@ -1,5 +1,5 @@
 import * as S from "./styles"
-import { Accessory, BackButton, ImageSlider } from "../../components"
+import { Accessory, BackButton, Button, ImageSlider } from "../../components"
 
 import speedSvg from "../../assets/speed.svg"
 import accelerationSvg from "../../assets/acceleration.svg"
@@ -48,6 +48,10 @@ export const CarDetails = ({}: CarDetailsProps) => {
           itaque quo quaerat, culpa sed impedit eum repudiandae ab non!
         </S.About>
       </S.Content>
+
+      <S.Footer>
+        <Button title="Confirmar" />
+      </S.Footer>
     </S.Container>
   )
 }

@@ -3,6 +3,7 @@ export const theme = {
     header: "#1b1b1f",
     background_primary: "#f4f5f6",
     background_secondary: "#ffffff",
+    background_third: "#ff1800",
     text: "#7a7a80",
     text_detail: "#aeaeb3",
     title: "#47474d",
