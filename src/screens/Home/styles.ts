@@ -29,7 +29,7 @@ export const TotalCars = styled.Text`
 
 export const CardList = styled(FlatList).attrs({
   ContentContainerStyle: {
-    padding: 24
+    padding: 24,
   },
-  showsVerticalScrollIndicator: false
+  showsVerticalScrollIndicator: false,
 })``

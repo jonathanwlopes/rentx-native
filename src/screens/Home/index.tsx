@@ -3,9 +3,14 @@ import { StatusBar } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import Logo from "../../assets/logo.svg"
 import { Car } from "../../components"
+import { useNavigation } from "@react-navigation/native"
+import { AppRoutesProps } from "../../@types/navigate"
 
 interface HomeProps {}
+
 export const Home = ({}: HomeProps) => {
+  const navigation = useNavigation<AppRoutesProps>()
+
   const carDataOne = {
     brand: "Audi",
     name: "RS 5 Coupé",
@@ -14,6 +19,10 @@ export const Home = ({}: HomeProps) => {
       price: 120,
     },
     thumbnail: "https://picsum.photos/300/300",
+  }
+
+  function handleCarDetails() {
+    navigation.navigate("CarDetails")
   }
 
   return (
@@ -29,8 +38,8 @@ export const Home = ({}: HomeProps) => {
       <S.CardList
         data={[1, 2, 3, 4, 5, 6, 7]}
         keyExtractor={(item) => String(item)}
-        renderItem={({ item }) => <Car data={carDataOne} />}
-      ></S.CardList>
+        renderItem={({ item }) => <Car data={carDataOne} onPress={handleCarDetails} />}
+      />
     </S.Container>
   )
 }

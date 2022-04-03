@@ -1,22 +1,25 @@
 import * as S from "./styles"
 import { Accessory, BackButton, Button, ImageSlider } from "../../components"
-
+import { Feather } from "@expo/vector-icons"
 import speedSvg from "../../assets/speed.svg"
 import accelerationSvg from "../../assets/acceleration.svg"
 import forceSvg from "../../assets/force.svg"
 import gasolineSvg from "../../assets/gasoline.svg"
 import exchangeSvg from "../../assets/exchange.svg"
 import peopleSvg from "../../assets/people.svg"
+import { RFValue } from "react-native-responsive-fontsize"
+import { useTheme } from "styled-components"
 import { useNavigation } from "@react-navigation/native"
 import { AppRoutesProps } from "../../@types/navigate"
 
-interface CarDetailsProps {}
+interface SchedulingDetailsProps {}
 
-export const CarDetails = ({}: CarDetailsProps) => {
+export const SchedulingDetails = ({}: SchedulingDetailsProps) => {
+  const theme = useTheme()
   const navigation = useNavigation<AppRoutesProps>()
 
   function handleConfirmRental() {
-    navigation.navigate("Scheduling")
+    navigation.navigate("SchedulingComplete")
   }
 
   return (
@@ -51,14 +54,35 @@ export const CarDetails = ({}: CarDetailsProps) => {
           <Accessory name="2 pessoas" icon={peopleSvg} />
         </S.Accessories>
 
-        <S.About>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat vel nisi dignissimos eaque maxime et veniam error accusamus assumenda quas
-          itaque quo quaerat, culpa sed impedit eum repudiandae ab non!
-        </S.About>
+        <S.RentalPeriod>
+          <S.CalendarIcon>
+            <Feather name="calendar" size={RFValue(24)} color={theme.colors.background_secondary} />
+          </S.CalendarIcon>
+
+          <S.DateInfo>
+            <S.DateTitle>DE</S.DateTitle>
+            <S.DateValue>18/06/2021</S.DateValue>
+          </S.DateInfo>
+
+          <Feather name="chevron-right" size={RFValue(10)} color={theme.colors.text} />
+
+          <S.DateInfo>
+            <S.DateTitle>ATÉ</S.DateTitle>
+            <S.DateValue>18/06/2021</S.DateValue>
+          </S.DateInfo>
+        </S.RentalPeriod>
+
+        <S.RentalPrice>
+          <S.RentalPriceLabel>TOTAL</S.RentalPriceLabel>
+          <S.RentalPriceDetails>
+            <S.RentalPriceQuota>R$ 580 x3 diárias</S.RentalPriceQuota>
+            <S.RentalPriceTotal>R$ 2.900</S.RentalPriceTotal>
+          </S.RentalPriceDetails>
+        </S.RentalPrice>
       </S.Content>
 
       <S.Footer>
-        <Button title="Escolher período do aluguel" onPress={handleConfirmRental} />
+        <Button title="Alugar agora" onPress={handleConfirmRental} color={theme.colors.success} />
       </S.Footer>
     </S.Container>
   )

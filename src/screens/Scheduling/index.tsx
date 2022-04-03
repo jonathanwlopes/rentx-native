@@ -1,14 +1,21 @@
-import { BackButton, Button } from "../../components"
+import { BackButton, Button, Calendar } from "../../components"
 import { useTheme } from "styled-components"
 
 import * as S from "./styles"
 import ArrowSvg from "../../assets/arrow.svg"
 import { StatusBar } from "react-native"
+import { useNavigation } from "@react-navigation/native"
+import { AppRoutesProps } from "../../@types/navigate"
 
 interface SchedulingProps {}
 
 export const Scheduling = ({}: SchedulingProps) => {
   const theme = useTheme()
+  const navigation = useNavigation<AppRoutesProps>()
+
+  function handleConfirmRental() {
+    navigation.navigate("SchedulingDetails")
+  }
 
   return (
     <S.Container>
@@ -36,10 +43,12 @@ export const Scheduling = ({}: SchedulingProps) => {
         </S.RentalPeriod>
       </S.Header>
 
-      <S.Content></S.Content>
+      <S.Content>
+        <Calendar />
+      </S.Content>
 
       <S.Footer>
-        <Button title="Confirmar" />
+        <Button title="Confirmar" onPress={handleConfirmRental} />
       </S.Footer>
     </S.Container>
   )

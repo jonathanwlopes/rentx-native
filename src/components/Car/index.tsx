@@ -1,5 +1,6 @@
 import * as S from "./styles"
 import GasolineSvg from "../../assets/gasoline.svg"
+import { RectButtonProps } from "react-native-gesture-handler"
 
 interface Car {
   brand: string
@@ -11,13 +12,14 @@ interface Car {
   thumbnail: string
 }
 
-interface CarProps {
+interface CarProps extends RectButtonProps {
   data: Car
 }
 
-export const Car = ({ data }: CarProps) => {
+export const Car = ({ data, ...rest }: CarProps) => {
+
   return (
-    <S.Container>
+    <S.Container {...rest}>
       <S.Details>
         <S.Brand>{data.brand}</S.Brand>
         <S.Name>{data.name}</S.Name>

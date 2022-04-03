@@ -1,7 +1,8 @@
+import { RectButton } from "react-native-gesture-handler"
 import { RFValue } from "react-native-responsive-fontsize"
 import styled from "styled-components/native"
 
-export const Container = styled.View`
+export const Container = styled(RectButton)`
   width: 100%;
   height: 126px;
 
@@ -10,6 +11,8 @@ export const Container = styled.View`
   align-items: center;
   padding: 24px;
   margin-bottom: 16px;
+
+  justify-content: space-between;
 `
 
 export const Details = styled.View``
