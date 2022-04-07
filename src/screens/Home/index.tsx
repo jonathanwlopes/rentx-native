@@ -1,15 +1,21 @@
+import React, { useEffect, useState } from "react"
+
 import * as S from "./styles"
 import { StatusBar } from "react-native"
 import { RFValue } from "react-native-responsive-fontsize"
 import Logo from "../../assets/logo.svg"
-import { Car } from "../../components"
+import { Car, Load } from "../../components"
 import { useNavigation } from "@react-navigation/native"
 import { AppRoutesProps } from "../../@types/navigate"
+import { api } from "../../services/api"
+import { CarDTO } from "../../dtos/CardDTO"
 
 interface HomeProps {}
 
 export const Home = ({}: HomeProps) => {
   const navigation = useNavigation<AppRoutesProps>()
+  const [cars, setCars] = useState<CarDTO[]>([])
+  const [loading, setLoading] = useState(true)
 
   const carDataOne = {
     brand: "Audi",
@@ -25,6 +31,21 @@ export const Home = ({}: HomeProps) => {
     navigation.navigate("CarDetails")
   }
 
+  async function fetchCars() {
+    try {
+      const response = await api.get("/cars")
+      setCars(response.data)
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchCars()
+  }, [])
+
   return (
     <S.Container>
       <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
@@ -35,11 +56,11 @@ export const Home = ({}: HomeProps) => {
         </S.HeaderContent>
       </S.Header>
 
-      <S.CardList
-        data={[1, 2, 3, 4, 5, 6, 7]}
-        keyExtractor={(item) => String(item)}
-        renderItem={({ item }) => <Car data={carDataOne} onPress={handleCarDetails} />}
-      />
+      {loading ? (
+        <Load />
+      ) : (
+        <S.CardList data={cars} keyExtractor={(item) => item.id} renderItem={({ item }) => <Car data={item} onPress={handleCarDetails} />} />
+      )}
     </S.Container>
   )
 }
