@@ -17,18 +17,8 @@ export const Home = ({}: HomeProps) => {
   const [cars, setCars] = useState<CarDTO[]>([])
   const [loading, setLoading] = useState(true)
 
-  const carDataOne = {
-    brand: "Audi",
-    name: "RS 5 Coupé",
-    rent: {
-      period: "Ao dia",
-      price: 120,
-    },
-    thumbnail: "https://picsum.photos/300/300",
-  }
-
-  function handleCarDetails() {
-    navigation.navigate("CarDetails")
+  function handleCarDetails(car: CarDTO) {
+    navigation.navigate("CarDetails", { car })
   }
 
   async function fetchCars() {
@@ -59,7 +49,11 @@ export const Home = ({}: HomeProps) => {
       {loading ? (
         <Load />
       ) : (
-        <S.CardList data={cars} keyExtractor={(item) => item.id} renderItem={({ item }) => <Car data={item} onPress={handleCarDetails} />} />
+        <S.CardList
+          data={cars}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <Car data={item} onPress={() => handleCarDetails(item)} />}
+        />
       )}
     </S.Container>
   )

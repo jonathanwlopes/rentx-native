@@ -1,60 +1,57 @@
 import * as S from "./styles"
 import { Accessory, BackButton, Button, ImageSlider } from "../../components"
-
-import speedSvg from "../../assets/speed.svg"
-import accelerationSvg from "../../assets/acceleration.svg"
-import forceSvg from "../../assets/force.svg"
-import gasolineSvg from "../../assets/gasoline.svg"
-import exchangeSvg from "../../assets/exchange.svg"
-import peopleSvg from "../../assets/people.svg"
-import { useNavigation } from "@react-navigation/native"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { AppRoutesProps } from "../../@types/navigate"
+import { CarDTO } from "../../dtos/CardDTO"
+import { getAccessoryIcon } from "../../utils/getAccessoryIcon"
 
-interface CarDetailsProps {}
+interface Params {
+  car: CarDTO
+}
 
-export const CarDetails = ({}: CarDetailsProps) => {
+export const CarDetails = () => {
   const navigation = useNavigation<AppRoutesProps>()
+  const route = useRoute()
+  const { car } = route.params as Params
 
   function handleConfirmRental() {
     navigation.navigate("Scheduling")
   }
 
+  function handleBack() {
+    navigation.goBack()
+  }
+
   return (
     <S.Container>
       <S.Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={handleBack} />
       </S.Header>
 
       <S.CarImages>
-        <ImageSlider imagesUrl={["https://picsum.photos/300/300"]} />
+        <ImageSlider imagesUrl={car.photos} />
       </S.CarImages>
 
       <S.Content>
         <S.Details>
           <S.Description>
-            <S.Brand>Lamborghini</S.Brand>
-            <S.Name>Huracan</S.Name>
+            <S.Brand>{car.brand}</S.Brand>
+            <S.Name>{car.name}</S.Name>
           </S.Description>
 
           <S.Rent>
-            <S.Period>Ao dia</S.Period>
-            <S.Price>R$ 580</S.Price>
+            <S.Period>{car.rent.period}</S.Period>
+            <S.Price>R$ {car.rent.price}</S.Price>
           </S.Rent>
         </S.Details>
 
         <S.Accessories>
-          <Accessory name="380Km/h" icon={speedSvg} />
-          <Accessory name="3.2s" icon={accelerationSvg} />
-          <Accessory name="800 HP" icon={forceSvg} />
-          <Accessory name="Gasolina" icon={gasolineSvg} />
-          <Accessory name="Auto" icon={exchangeSvg} />
-          <Accessory name="2 pessoas" icon={peopleSvg} />
+          {car.accessories.map((accessory) => (
+            <Accessory key={accessory.type} name={accessory.name} icon={getAccessoryIcon(accessory.type)} />
+          ))}
         </S.Accessories>
 
-        <S.About>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat vel nisi dignissimos eaque maxime et veniam error accusamus assumenda quas
-          itaque quo quaerat, culpa sed impedit eum repudiandae ab non!
-        </S.About>
+        <S.About>{car.about}</S.About>
       </S.Content>
 
       <S.Footer>
